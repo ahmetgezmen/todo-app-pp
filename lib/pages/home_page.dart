@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app_pp/constant/base_constant.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -10,8 +11,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-
+    return Scaffold(
+      appBar: AppBar(title: const Text(BaseConstant.appName),),
+      body: Column(),
     );
   }
 }
