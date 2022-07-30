@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
+import 'core/initializing_app.dart';
 
 void main() {
+  initializingApp();
 }
-
