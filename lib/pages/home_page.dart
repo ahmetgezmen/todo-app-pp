@@ -15,6 +15,17 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Padding(
+          padding: EdgeInsets.all(widget.paddingNumber),
+          child: InkWell(
+            onTap: () {
+
+            },
+            child: const CircleAvatar(
+              child: Text("AH"),
+            ),
+          ),
+        ),
         title: const Text(BaseConstant.appName),
       ),
       body: Column(
@@ -22,7 +33,9 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           Padding(
             padding: EdgeInsets.only(
-                left: widget.paddingNumber, top: widget.paddingNumber,bottom: widget.paddingNumber),
+                left: widget.paddingNumber,
+                top: widget.paddingNumber,
+                bottom: widget.paddingNumber),
             child: Text(
               BaseConstant.myNotes,
               style: Theme.of(context).textTheme.titleLarge,
