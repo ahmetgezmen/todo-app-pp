@@ -24,7 +24,7 @@ class _NoteFileWidgetState extends State<NoteFileWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SvgPicture.asset("assets/svg/files-icon.svg"),
+        Expanded(child: SvgPicture.asset("assets/svg/files-icon.svg")),
         Text(widget.title, style: Theme.of(context).textTheme.titleSmall),
       ],
     );
