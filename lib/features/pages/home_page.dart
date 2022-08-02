@@ -21,15 +21,18 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                AppBarLeadingButton(paddingNumber: widget.paddingNumber,),
-                Text(BaseConstant.appName, style: Theme.of(context).textTheme.titleLarge,),
-                IconButton(onPressed: () {
-                  // todo bildirimler
-                }, icon: const Icon(Icons.add_alert))
-              ],
+            Material(
+              elevation: 3,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  AppBarLeadingButton(paddingNumber: widget.paddingNumber,),
+                  Text(BaseConstant.appName, style: Theme.of(context).textTheme.titleLarge,),
+                  IconButton(onPressed: () {
+                    // todo bildirimler
+                  }, icon: const Icon(Icons.add_alert))
+                ],
+              ),
             ),
             Padding(
               padding: EdgeInsets.only(
