@@ -16,46 +16,66 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: Padding(
-          padding: EdgeInsets.all(widget.paddingNumber),
-          child: InkWell(
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ProfilePage(),));
-            },
-            child:  CircleAvatarWidget(),
-          ),
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                AppBarLeadingButton(paddingNumber: widget.paddingNumber,),
+                Text(BaseConstant.appName, style: Theme.of(context).textTheme.titleLarge,),
+                IconButton(onPressed: () {
+                  // todo bildirimler
+                }, icon: const Icon(Icons.add_alert))
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  left: widget.paddingNumber,
+                  top: widget.paddingNumber,
+                  bottom: widget.paddingNumber),
+              child: Text(
+                BaseConstant.myNotes,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ),
+            Expanded(
+              child: GridView.builder(
+                itemCount: 20,
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 200,
+                    childAspectRatio: 3 / 2,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20),
+                itemBuilder: (context, index) {
+                  return SvgPicture.asset("assets/svg/files-icon.svg");
+                },
+              ),
+            ),
+          ],
         ),
-        title: const Text(BaseConstant.appName),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(
-                left: widget.paddingNumber,
-                top: widget.paddingNumber,
-                bottom: widget.paddingNumber),
-            child: Text(
-              BaseConstant.myNotes,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-          ),
-          Expanded(
-            child: GridView.builder(
-              itemCount: 20,
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200,
-                  childAspectRatio: 3 / 2,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 20),
-              itemBuilder: (context, index) {
-                return SvgPicture.asset("assets/svg/files-icon.svg");
-              },
-            ),
-          ),
-        ],
+    );
+  }
+}
+
+class AppBarLeadingButton extends StatelessWidget {
+  final paddingNumber;
+  const AppBarLeadingButton({Key? key, this.paddingNumber}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(paddingNumber),
+      child: InkWell(
+        onTap: () async {
+          // Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ProfilePage(),));
+          await Scaffold.of(context).showBottomSheet((buildContext) => const ProfilePage(),).closed;
+
+        },
+        child:  const CircleAvatarWidget(),
       ),
     );
   }

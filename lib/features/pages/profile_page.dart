@@ -10,9 +10,10 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-
-  itemsSpaceHeight(){
-    return const SizedBox(height: 20.0,);
+  itemsSpaceHeight() {
+    return const SizedBox(
+      height: 20.0,
+    );
   }
 
   @override
@@ -33,13 +34,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       onTap: () {
                         Navigator.of(context).pop();
                       },
-                      child: Icon(size: 30.0,Icons.arrow_back),
+                      child: Icon(size: 30.0, Icons.arrow_back),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 16.0),
                     child: InkWell(
-                      onTap:() {
+                      onTap: () {
                         // todo routh setting page
                       },
                       child: Icon(Icons.settings),
@@ -47,7 +48,18 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ],
               ),
-              const CircleAvatarWidget(radiusCircleAvatar: 75.0,)
+              const CircleAvatarWidget(
+                radiusCircleAvatar: 75.0,
+              )
+            ],
+          ),
+        ),
+        bottomSheet: BottomAppBar(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: const [
+              Text("asdasdas"),
+              Text("asdasdas"),
             ],
           ),
         ),
