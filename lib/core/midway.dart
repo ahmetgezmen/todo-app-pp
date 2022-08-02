@@ -9,6 +9,20 @@ class MidWay extends StatefulWidget {
 }
 
 class _MidWayState extends State<MidWay> {
+
+  bool isInitialized = false;
+
+  initializing(){
+
+  }
+
+
+  @override
+  void initState() {
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return const MyHomePage();

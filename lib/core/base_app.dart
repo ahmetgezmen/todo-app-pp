@@ -1,5 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app_pp/core/midway.dart';
+
+import '../onboard/pages/onboard_home.dart';
+import 'midway.dart';
+
 
 
 class MyApp extends StatelessWidget {
@@ -12,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MidWay(),
+      home: FirebaseAuth.instance.currentUser!=null ? const OnboardHome() :const MidWay(),
     );
   }
 }
