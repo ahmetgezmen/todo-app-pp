@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_app_pp/constant/profile_contants.dart';
 
 import '../widgets/circleAvatar_widget.dart';
 
@@ -57,9 +59,21 @@ class _ProfilePageState extends State<ProfilePage> {
         bottomSheet: BottomAppBar(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: const [
-              Text("asdasdas"),
-              Text("asdasdas"),
+            children: [
+              TextButton(
+                onPressed: () {
+                  FirebaseAuth.instance.signOut();
+                },
+                child: const Text(ProfileContants.sign_out),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  // todo save function
+                },
+                child: const Text(
+                  ProfileContants.save,
+                ),
+              ),
             ],
           ),
         ),
