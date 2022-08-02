@@ -27,8 +27,9 @@ class _OnboardHomeState extends State<OnboardHome> {
                 width: 80,
                 height: 80,
                 child: InkWell(
-                  onTap: () {
-                    GoogleServices.signInWithGoogle();
+                  onTap: () async {
+                    await GoogleServices.signInWithGoogle();
+                    setState((){});
                   },
                   child: SvgPicture.asset('assets/svg/icons8-google-480.svg'),
                 ),
