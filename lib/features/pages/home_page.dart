@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo_app_pp/constant/base_constant.dart';
+import 'package:todo_app_pp/features/pages/profile_page.dart';
 
 class MyHomePage extends StatefulWidget {
   final double paddingNumber = 8.0;
@@ -19,10 +21,10 @@ class _MyHomePageState extends State<MyHomePage> {
           padding: EdgeInsets.all(widget.paddingNumber),
           child: InkWell(
             onTap: () {
-
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ProfilePage(),));
             },
-            child: const CircleAvatar(
-              child: Text("AH"),
+            child:  CircleAvatar(
+              child: Text(FirebaseAuth.instance.currentUser!.displayName.toString().split(' ').first.substring(0,1)+FirebaseAuth.instance.currentUser!.displayName.toString().split(' ').last.substring(0,1)),
             ),
           ),
         ),
