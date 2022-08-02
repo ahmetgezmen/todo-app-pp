@@ -13,7 +13,7 @@ class _CircleAvatarWidgetState extends State<CircleAvatarWidget> {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      radius: 20 ?? widget.radiusCircleAvatar,
+      radius: widget.radiusCircleAvatar ?? 20.0,
       child: Text(FirebaseAuth.instance.currentUser!.displayName
               .toString()
               .split(' ')
