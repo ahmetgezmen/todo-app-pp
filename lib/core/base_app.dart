@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: FirebaseAuth.instance.currentUser!=null ? const OnboardHome() :const MidWay(),
+      home: FirebaseAuth.instance.currentUser == null ? const OnboardHome() :const MidWay(),
     );
   }
 }
