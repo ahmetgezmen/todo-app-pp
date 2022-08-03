@@ -15,7 +15,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   itemsSpaceHeight() {
     return const SizedBox(
-      height: 20.0,
+      height: 10.0,
     );
   }
 
@@ -33,20 +33,20 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0),
-                    child: InkWell(
-                      onTap: () {
+                    child: IconButton(
+                      onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Icon(size: 30.0, Icons.arrow_back),
+                      icon: Icon(size: 30.0, Icons.arrow_back),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 16.0),
-                    child: InkWell(
-                      onTap: () {
+                    child: IconButton(
+                      onPressed: () {
                         // todo routh setting page
                       },
-                      child: const Icon(Icons.settings),
+                      icon: const Icon(Icons.settings),
                     ),
                   ),
                 ],
