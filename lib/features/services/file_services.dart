@@ -13,7 +13,7 @@ final CollectionReference<Map<String, dynamic>> files = FirebaseFirestore
 class FileServices {
 
   static Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getFileLists() async {
-    final QuerySnapshot<Map<String, dynamic>> quarySnapshot = await files.get();
+    final QuerySnapshot<Map<String, dynamic>> quarySnapshot = await files.orderBy("title").get();
     final docList = quarySnapshot.docs;
     return docList;
   }
