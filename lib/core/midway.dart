@@ -1,30 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_app_pp/features/pages/home_page.dart';
+import 'package:todo_app_pp/features/providers/user_provider.dart';
 
-class MidWay extends StatefulWidget {
-  const MidWay({Key? key}) : super(key: key);
+
+class MidWay extends ConsumerStatefulWidget {
+  const MidWay({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  State<MidWay> createState() => _MidWayState();
+  ConsumerState createState() => _MidWayState();
 }
 
-class _MidWayState extends State<MidWay> {
+class _MidWayState extends ConsumerState<MidWay> {
 
-  bool isInitialized = false;
+  bool _isInitialized = false;
 
-  initializing(){
-
+  initializing() async {
+    await ref.read(userProvider).gettingUser();
+    setState(() {
+      _isInitialized = true;
+    });
   }
-
 
   @override
   void initState() {
-
+  initializing();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return const MyHomePage();
+    return _isInitialized ? const MyHomePage(): const Center(child:  CircularProgressIndicator());
   }
 }

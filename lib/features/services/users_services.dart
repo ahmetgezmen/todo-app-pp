@@ -16,11 +16,11 @@ class UserServices {
           jsonDecode(
             userModelToJson(
               UserModel(
-                  fname: fireUser.displayName.toString(),
-                  email: fireUser.email.toString(),
-                  uuid: fireUser.uid.toString(),
-                  phone: fireUser.phoneNumber.toString(),
-                  picsUrl: fireUser.photoURL.toString(),
+                  fname: fireUser.displayName,
+                  email: fireUser.email,
+                  uuid: fireUser.uid,
+                  phone: fireUser.phoneNumber,
+                  picsUrl: fireUser.photoURL,
                   isApproved: fireUser.emailVerified),
             ),
           ),
@@ -30,4 +30,13 @@ class UserServices {
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));
   }
+
+  static getMyInfo() async {
+    DocumentSnapshot<Object?> docSnapshot = await users.doc(FirebaseAuth.instance.currentUser!.uid.toString()).get();
+    if ( docSnapshot.data()==null ){
+      return false;
+    }
+    return UserModel.fromJson(docSnapshot.data());
+  }
+
 }
