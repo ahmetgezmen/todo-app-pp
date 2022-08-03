@@ -12,18 +12,22 @@ class CircleAvatarWidget extends StatefulWidget {
 class _CircleAvatarWidgetState extends State<CircleAvatarWidget> {
   @override
   Widget build(BuildContext context) {
-    return CircleAvatar(
-      radius: widget.radiusCircleAvatar ?? 20.0,
-      child: Text(FirebaseAuth.instance.currentUser!.displayName
-              .toString()
-              .split(' ')
-              .first
-              .substring(0, 1) +
-          FirebaseAuth.instance.currentUser!.displayName
-              .toString()
-              .split(' ')
-              .last
-              .substring(0, 1)),
-    );
+    return
+      CircleAvatar(
+        backgroundImage: Image.network(FirebaseAuth.instance.currentUser!.photoURL.toString()).image,
+      );
+    //   CircleAvatar(
+    //   radius: widget.radiusCircleAvatar ?? 20.0,
+    //   child: Text(FirebaseAuth.instance.currentUser!.displayName
+    //           .toString()
+    //           .split(' ')
+    //           .first
+    //           .substring(0, 1) +
+    //       FirebaseAuth.instance.currentUser!.displayName
+    //           .toString()
+    //           .split(' ')
+    //           .last
+    //           .substring(0, 1)),
+    // );
   }
 }
