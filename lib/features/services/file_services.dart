@@ -11,10 +11,18 @@ final CollectionReference<Map<String, dynamic>> files = FirebaseFirestore
     .collection(FirebaseAuth.instance.currentUser!.uid);
 
 class FileServices {
+
+  static Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getFileLists() async {
+    final QuerySnapshot<Map<String, dynamic>> quarySnapshot = await files.get();
+    final docList = quarySnapshot.docs;
+    return docList;
+  }
+
+
   static Future addFiles(String title, bool isPrivate) async {
-    final QuerySnapshot<Map<String, dynamic>> docsList = await files.get();
-    for (int i = 0; i < docsList.docs.length; i++) {
-      if (docsList.docs[i].data()['title'] == title) {
+    final QuerySnapshot<Map<String, dynamic>> quarySnapshot = await files.get();
+    for (int i = 0; i < quarySnapshot.docs.length; i++) {
+      if (quarySnapshot.docs[i].data()['title'] == title) {
         print("not added");
         return false;
       }
