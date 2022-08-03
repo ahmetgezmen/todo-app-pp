@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app_pp/constant/profile_contants.dart';
+import 'package:todo_app_pp/onboard/pages/onboard_home.dart';
 
-import '../widgets/circleAvatar_widget.dart';
+import '../widgets/circle_avatar_widget.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -45,14 +46,17 @@ class _ProfilePageState extends State<ProfilePage> {
                       onTap: () {
                         // todo routh setting page
                       },
-                      child: Icon(Icons.settings),
+                      child: const Icon(Icons.settings),
                     ),
                   ),
                 ],
               ),
               const CircleAvatarWidget(
                 radiusCircleAvatar: 75.0,
-              )
+              ),
+              const SizedBox(height: 10),
+              Text(FirebaseAuth.instance.currentUser!.displayName.toString(), style: Theme.of(context).textTheme.headline3?.copyWith(color: Colors.black)),
+              const Divider(),
             ],
           ),
         ),
@@ -62,9 +66,14 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               TextButton(
                 onPressed: () {
-                  FirebaseAuth.instance.signOut();
+                  FirebaseAuth.instance.signOut().then((value) {
+                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) {
+                      return const OnboardHome();
+                    },), (route) => false);
+                  });
+
                 },
-                child: const Text(ProfileContants.sign_out),
+                child: const Text(ProfileContants.singOut),
               ),
               ElevatedButton(
                 onPressed: () {

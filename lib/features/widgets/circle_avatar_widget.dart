@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CircleAvatarWidget extends StatefulWidget {
-  final radiusCircleAvatar;
+  final double? radiusCircleAvatar;
   const CircleAvatarWidget({Key? key, this.radiusCircleAvatar}) : super(key: key);
 
   @override

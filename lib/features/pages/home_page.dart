@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo_app_pp/constant/base_constant.dart';
 import 'package:todo_app_pp/features/pages/profile_page.dart';
 
-import '../widgets/circleAvatar_widget.dart';
+import '../widgets/circle_avatar_widget.dart';
 
 class MyHomePage extends StatefulWidget {
   final double paddingNumber = 8.0;
@@ -65,8 +65,8 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class AppBarLeadingButton extends StatelessWidget {
-  final paddingNumber;
-  const AppBarLeadingButton({Key? key, this.paddingNumber}) : super(key: key);
+  final double paddingNumber;
+  const AppBarLeadingButton({Key? key, required this.paddingNumber}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo_app_pp/constant/onboard_contants.dart';
+import 'package:todo_app_pp/core/midway.dart';
 import 'package:todo_app_pp/features/services/google_services.dart';
 
 class OnboardHome extends StatefulWidget {
@@ -29,7 +31,17 @@ class _OnboardHomeState extends State<OnboardHome> {
                 child: InkWell(
                   onTap: () async {
                     await GoogleServices.signInWithGoogle();
-                    setState((){});
+                    if (FirebaseAuth.instance.currentUser == null) {
+                      showDialog(
+                        context: context,
+                        builder: (context) =>
+                            const AlertDialog(title: Text('Someting is Wrong')),
+                      );
+                    } else {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const MidWay(),
+                      ));
+                    }
                   },
                   child: SvgPicture.asset('assets/svg/icons8-google-480.svg'),
                 ),
