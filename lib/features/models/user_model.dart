@@ -27,7 +27,7 @@ class UserModel {
       List<String>? myFriends, 
       String? gender, 
       String? fname, 
-      Location? location, 
+      Location? location,
       String? email, 
       String? uuid, 
       String? username, 
@@ -43,6 +43,7 @@ class UserModel {
     _myFriends = myFriends;
     _gender = gender;
     _fname = fname;
+    _picsUrl = picsUrl;
     _location = location;
     _email = email;
     _uuid = uuid;
@@ -62,6 +63,7 @@ class UserModel {
     _myFriends = json['myFriends'] != null ? json['myFriends'].cast<String>() : [];
     _gender = json['gender'];
     _fname = json['fname'];
+    _picsUrl = json['picsUrl'];
     _location = json['location'] != null ? Location.fromJson(json['location']) : null;
     _email = json['email'];
     _uuid = json['uuid'];
@@ -79,6 +81,7 @@ class UserModel {
   List<String>? _myFriends;
   String? _gender;
   String? _fname;
+  String? _picsUrl;
   Location? _location;
   String? _email;
   String? _uuid;
@@ -96,6 +99,7 @@ class UserModel {
   List<String>? get myFriends => _myFriends;
   String? get gender => _gender;
   String? get fname => _fname;
+  String? get picsUrl => _picsUrl;
   Location? get location => _location;
   String? get email => _email;
   String? get uuid => _uuid;
@@ -114,7 +118,7 @@ class UserModel {
     map['myNotes'] = _myNotes;
     map['myFriends'] = _myFriends;
     map['gender'] = _gender;
-    map['fname'] = _fname;
+    map['picsUrl'] = _picsUrl;
     if (_location != null) {
       map['location'] = _location?.toJson();
     }
