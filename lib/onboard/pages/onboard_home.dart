@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo_app_pp/constant/onboard_contants.dart';
 import 'package:todo_app_pp/core/midway.dart';
 import 'package:todo_app_pp/features/services/google_services.dart';
+import 'package:todo_app_pp/features/services/users_services.dart';
 
 class OnboardHome extends StatefulWidget {
   const OnboardHome({Key? key}) : super(key: key);
@@ -30,6 +31,7 @@ class _OnboardHomeState extends State<OnboardHome> {
                 height: 80,
                 child: InkWell(
                   onTap: () async {
+                    FirebaseAuth.instance.signOut();
                     await GoogleServices.signInWithGoogle();
                     if (FirebaseAuth.instance.currentUser == null) {
                       showDialog(
@@ -38,6 +40,7 @@ class _OnboardHomeState extends State<OnboardHome> {
                             const AlertDialog(title: Text('Someting is Wrong')),
                       );
                     } else {
+                      await UserServices.addUser();
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const MidWay(),
                       ));
