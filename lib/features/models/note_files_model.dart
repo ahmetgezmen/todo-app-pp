@@ -1,7 +1,7 @@
 import 'dart:convert';
 /// title : "titlesddsa"
 /// list : ["SDRSERF","SDFSKDFGKS"]
-/// isLiked : true
+/// isPrivate : true
 
 NoteFilesModel noteFilesModelFromJson(String str) => NoteFilesModel.fromJson(json.decode(str));
 String noteFilesModelToJson(NoteFilesModel data) => json.encode(data.toJson());
@@ -9,30 +9,30 @@ class NoteFilesModel {
   NoteFilesModel({
       String? title, 
       List<String>? list, 
-      bool? isLiked,}){
+      bool? isPrivate,}){
     _title = title;
     _list = list;
-    _isLiked = isLiked;
+    _isPrivate = isPrivate;
 }
 
   NoteFilesModel.fromJson(dynamic json) {
     _title = json['title'];
     _list = json['list'] != null ? json['list'].cast<String>() : [];
-    _isLiked = json['isLiked'];
+    _isPrivate = json['isPrivate'];
   }
   String? _title;
   List<String>? _list;
-  bool? _isLiked;
+  bool? _isPrivate;
 
   String? get title => _title;
   List<String>? get list => _list;
-  bool? get isLiked => _isLiked;
+  bool? get isPrivate => _isPrivate;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['title'] = _title;
     map['list'] = _list;
-    map['isLiked'] = _isLiked;
+    map['isPrivate'] = _isPrivate;
     return map;
   }
 
