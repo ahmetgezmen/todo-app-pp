@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todo_app_pp/features/models/user_model.dart';
 
-CollectionReference users = FirebaseFirestore.instance.collection('users');
+final CollectionReference users = FirebaseFirestore.instance.collection('users');
 
 class UserServices {
 
