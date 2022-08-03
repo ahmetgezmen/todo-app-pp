@@ -7,8 +7,8 @@ import 'package:todo_app_pp/features/models/note_files_model.dart';
 final CollectionReference<Map<String, dynamic>> files = FirebaseFirestore
     .instance
     .collection('files')
-    .doc('userFiles')
-    .collection(FirebaseAuth.instance.currentUser!.uid);
+    .doc(FirebaseAuth.instance.currentUser!.uid)
+    .collection("main");
 
 class FileServices {
 
