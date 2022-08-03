@@ -14,6 +14,7 @@ class _CircleAvatarWidgetState extends State<CircleAvatarWidget> {
   Widget build(BuildContext context) {
     return
       CircleAvatar(
+        radius: widget.radiusCircleAvatar ?? 20.0,
         backgroundImage: Image.network(FirebaseAuth.instance.currentUser!.photoURL.toString()).image,
       );
     //   CircleAvatar(
