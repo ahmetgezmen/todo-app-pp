@@ -119,6 +119,7 @@ class UserModel {
     map['myNotes'] = _myNotes;
     map['myFriends'] = _myFriends;
     map['gender'] = _gender;
+    map['fname'] = _fname;
     map['picsUrl'] = _picsUrl;
     if (_location != null) {
       map['location'] = _location?.toJson();
