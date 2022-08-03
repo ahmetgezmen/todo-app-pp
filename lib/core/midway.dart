@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_app_pp/features/pages/home_page.dart';
+import 'package:todo_app_pp/features/providers/file_provider.dart';
 import 'package:todo_app_pp/features/providers/user_provider.dart';
 
 
@@ -19,6 +20,7 @@ class _MidWayState extends ConsumerState<MidWay> {
 
   initializing() async {
     await ref.read(userProvider).gettingUser();
+    await ref.read(fileProvider).gettingFile();
     setState(() {
       _isInitialized = true;
     });
