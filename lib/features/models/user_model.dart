@@ -27,6 +27,7 @@ class UserModel {
       List<String>? myFriends, 
       String? gender, 
       String? fname, 
+      String? picsUrl,
       Location? location,
       String? email, 
       String? uuid, 
