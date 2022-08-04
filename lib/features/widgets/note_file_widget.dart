@@ -28,7 +28,7 @@ class _NoteFileWidgetState extends State<NoteFileWidget> {
       children: [
         InkWell(
           onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => FilePage(noteFile: widget.notefile),),);
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => FilePage( widget.notefile),),);
           },
           child: SvgPicture.asset(
             "assets/svg/files-icon.svg",
