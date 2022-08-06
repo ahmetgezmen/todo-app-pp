@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_app_pp/features/providers/file_provider.dart';
@@ -33,7 +34,7 @@ class _FilePageState extends ConsumerState<FilePage> {
   }
 
   fetching() async {
-    await ref.read(fileProvider).fetchingNewList(widget.noteFile.title.toString(), widget.noteFile.isUnderTheMain!);
+    await ref.read(fileProvider).fetchingNewList(widget.noteFile.uid.toString(), widget.noteFile.isUnderTheMain!);
     setState(() {
       _isFetchin = false;
     });
@@ -50,12 +51,23 @@ class _FilePageState extends ConsumerState<FilePage> {
     return  SafeArea(
       child: Scaffold(
         floatingActionButton: FloatingActionButton(onPressed: () async {
-          final result = await FileServices.addFilesToAllFiles("deneme", true, widget.noteFile.title.toString());
-          if (result==true){
-            final model = await FileServices.getFile("deneme", false);
-            ref.read(fileProvider).addFile(widget.noteFile.title.toString(), model);
-            widget.noteFile.list!.add("deneme");
-            FileServices.updateFile(widget.noteFile.title.toString(), widget.noteFile.list!, widget.noteFile.isUnderTheMain!);
+          final toDayTime = Timestamp.now().toDate().toUtc();
+          final timeStamp =
+              toDayTime.year.toString()+'-'+
+                  toDayTime.month.toString()+'-'+
+                  toDayTime.day.toString()+'-'+
+                  toDayTime.hour.toString()+'-'+
+                  toDayTime.minute.toString()+'-'+
+                  toDayTime.second.toString()+'-'+
+                  toDayTime.microsecond.toString()
+          ;
+          final result = await FileServices.addFilesToAllFiles("deneme", true, widget.noteFile.uid.toString(),timeStamp);
+          if (result[0]==true){
+            final model = await FileServices.getFile(result[1], false);
+            ref.read(fileProvider).addFile(widget.noteFile.uid.toString(), model);
+            widget.noteFile.list!.add(timeStamp+widget.noteFile.title.toString());
+            await Future.delayed(Duration(seconds: 1));
+            FileServices.updateFile(widget.noteFile.uid.toString(), widget.noteFile.list!, widget.noteFile.isUnderTheMain!);
           }
         },
           child: const Icon(Icons.add),
@@ -78,14 +90,14 @@ class _FilePageState extends ConsumerState<FilePage> {
                 :
             Expanded(
               child: GridView.builder(
-                itemCount: ref.watch(fileProvider).getSubFiles(widget.noteFile.title.toString()).length,
+                itemCount: ref.watch(fileProvider).getSubFiles(widget.noteFile.uid.toString()).length,
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 200,
                     childAspectRatio: 3 / 2,
                     crossAxisSpacing: 20,
                     mainAxisSpacing: 20),
                 itemBuilder: (context, index) {
-                  final NoteFilesModel model = ref.watch(fileProvider).getSubFiles(widget.noteFile.title.toString())[index];
+                  final NoteFilesModel model = ref.watch(fileProvider).getSubFiles(widget.noteFile.uid.toString())[index];
                   return NoteFileWidget(
                       notefile: model
                   );

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todo_app_pp/features/models/note_files_model.dart';
 
+
 final CollectionReference<Map<String, dynamic>> filesMain = FirebaseFirestore
     .instance
     .collection('files')
@@ -24,14 +25,12 @@ class FileServices {
     return docList;
   }
 
-  static Future<NoteFilesModel> getFile(uid, bool isUnderTheMain) async {
+  static Future<NoteFilesModel> getFile(String uid, bool isUnderTheMain) async {
     final docSnapshot = isUnderTheMain
         ? await filesMain.doc(uid).get()
         : await filesAllFile.doc(uid).get();
-
     NoteFilesModel model =
         noteFilesModelFromJson(jsonEncode(docSnapshot.data()));
-
     return model;
   }
 
@@ -49,7 +48,7 @@ class FileServices {
         .catchError((error) => print("Failed to update File: $error"));
   }
 
-  static Future addFiles(String title, bool isPrivate) async {
+  static Future addFiles(String title, bool isPrivate, String timeStamp) async {
     final QuerySnapshot<Map<String, dynamic>> quarySnapshot =
         await filesMain.get();
     for (int i = 0; i < quarySnapshot.docs.length; i++) {
@@ -60,10 +59,11 @@ class FileServices {
     }
 
     return filesMain
-        .doc(title)
+        .doc(timeStamp+title)
         .set(jsonDecode(
           noteFilesModelToJson(
             NoteFilesModel(
+              uid: timeStamp+title,
               isUnderTheMain: true,
               title: title,
               isPrivate: isPrivate,
@@ -76,21 +76,22 @@ class FileServices {
   }
 
   static Future addFilesToAllFiles(
-      String title, bool isPrivate, String parentUid) async {
+      String title, bool isPrivate, String parentUid, String timeStamp) async {
     final QuerySnapshot<Map<String, dynamic>> quarySnapshot =
         await filesAllFile.get();
     for (int i = 0; i < quarySnapshot.docs.length; i++) {
-      if (quarySnapshot.docs[i].data()['title'] == title) {
+      if (quarySnapshot.docs[i].data()['title'] == title && quarySnapshot.docs[i].data()['parentUid']==parentUid) {
         print("not added");
         return false;
       }
     }
 
     return filesAllFile
-        .doc(title)
+        .doc(timeStamp+title)
         .set(jsonDecode(
           noteFilesModelToJson(
             NoteFilesModel(
+              uid: timeStamp+title,
               isUnderTheMain: false,
               title: title,
               isPrivate: isPrivate,
@@ -98,7 +99,7 @@ class FileServices {
             ),
           ),
         ))
-        .then((value) => true)
+        .then((value) => [true, timeStamp+title])
         .catchError((error) => print("Failed to add File: $error"));
   }
 }

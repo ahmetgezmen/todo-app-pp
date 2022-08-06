@@ -24,14 +24,14 @@ class NoteFilesListViewModel extends ChangeNotifier{
 
   List<NoteFilesModel> getSubFiles(String uid) => _noteFilesMap[uid]!;
 
-  fetchingNewList(uid, bool isUnderTheMain) async {
-    NoteFilesModel noteFile = await FileServices.getFile(uid, isUnderTheMain);
+  fetchingNewList(String uid, bool isUnderTheMain) async {
+    NoteFilesModel noteFile = await FileServices.getFile(uid , isUnderTheMain);
     final List<NoteFilesModel> list = [];
     for (var element in noteFile.list!) {
       final newNote =  await FileServices.getFile(element, false);
       list.add(newNote);
     }
-    _noteFilesMap[noteFile.title.toString()] = list;
+    _noteFilesMap[noteFile.uid.toString()] = list;
     notifyListeners();
   }
 
