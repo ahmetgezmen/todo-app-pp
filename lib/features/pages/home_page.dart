@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_app_pp/constant/base_constant.dart';
 import 'package:todo_app_pp/features/models/note_files_model.dart';
@@ -46,7 +47,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-
 class FloatingActionsButtonWidget extends ConsumerStatefulWidget {
   const FloatingActionsButtonWidget({
     Key? key,
@@ -62,19 +62,45 @@ class _FloatingActionsButtonWidgetState
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () async {
-        final toDayTime = Timestamp.now().toDate().toUtc();
-        final timeStamp =
-            toDayTime.year.toString()+'-'+
-                toDayTime.month.toString()+'-'+
-                toDayTime.day.toString()+'-'+
-                toDayTime.hour.toString()+'-'+
-                toDayTime.minute.toString()+'-'+
-                toDayTime.second.toString()+'-'+
-                toDayTime.microsecond.toString()
-        ;
-        await FileServices.addFiles('bbbbbb', false, timeStamp);
-        await ref.read(fileProvider).gettingFile();
-        setState(() {});
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: SizedBox(
+                height: 100,
+                child: Row(
+                    children: [
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {},
+                      child:
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: SvgPicture.asset("assets/svg/file-circle-plus-solid.svg"),
+                          ),
+                    ),
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      onTap: () async {
+                        final toDayTime = Timestamp.now().toDate().toUtc();
+                        final timeStamp = '${toDayTime.year}-${toDayTime.month}-${toDayTime.day}-${toDayTime.hour}-${toDayTime.minute}-${toDayTime.second}-${toDayTime.microsecond}';
+                        await FileServices.addFiles('bbbbbb', false, timeStamp);
+                        await ref.read(fileProvider).gettingFile();
+                        Navigator.of(context).pop();
+                        setState(() {});
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: SvgPicture.asset("assets/svg/folder-plus-solid.svg"),
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+            );
+          },
+        );
       },
       child: const Icon(Icons.add),
     );
@@ -100,8 +126,7 @@ class GridViewWidget extends ConsumerWidget {
         itemBuilder: (context, index) {
           return NoteFileWidget(
               notefile: noteFilesModelFromJson(
-                      jsonEncode(providerFile.modelList[index].data()))
-                  );
+                  jsonEncode(providerFile.modelList[index].data())));
         },
       ),
     );
