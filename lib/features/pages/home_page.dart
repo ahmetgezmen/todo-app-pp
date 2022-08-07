@@ -58,6 +58,8 @@ class FloatingActionsButtonWidget extends ConsumerStatefulWidget {
 
 class _FloatingActionsButtonWidgetState
     extends ConsumerState<FloatingActionsButtonWidget> {
+  TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
@@ -66,37 +68,47 @@ class _FloatingActionsButtonWidgetState
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: SizedBox(
-                height: 100,
-                child: Row(
-                    children: [
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {},
-                      child:
-                          Padding(
+              title: Column(
+                children: [
+                  TextField(
+                    controller: controller,
+                  ),
+                  SizedBox(
+                    height: 100,
+                    child: Row(children: [
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {},
+                          child: Padding(
                             padding: const EdgeInsets.all(16.0),
-                            child: SvgPicture.asset("assets/svg/file-circle-plus-solid.svg"),
+                            child: SvgPicture.asset(
+                                "assets/svg/file-circle-plus-solid.svg"),
                           ),
-                    ),
-                  ),
-                  Expanded(
-                    child: InkWell(
-                      onTap: () async {
-                        final toDayTime = Timestamp.now().toDate().toUtc();
-                        final timeStamp = '${toDayTime.year}-${toDayTime.month}-${toDayTime.day}-${toDayTime.hour}-${toDayTime.minute}-${toDayTime.second}-${toDayTime.microsecond}';
-                        await FileServices.addFiles('bbbbbb', false, timeStamp);
-                        await ref.read(fileProvider).gettingFile();
-                        Navigator.of(context).pop();
-                        setState(() {});
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: SvgPicture.asset("assets/svg/folder-plus-solid.svg"),
+                        ),
                       ),
-                    ),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () async {
+                            final toDayTime = Timestamp.now().toDate().toUtc();
+                            final timeStamp =
+                                '${toDayTime.year}-${toDayTime.month}-${toDayTime.day}-${toDayTime.hour}-${toDayTime.minute}-${toDayTime.second}-${toDayTime.microsecond}';
+                            await FileServices.addFiles(
+                                controller.value.text, false, timeStamp);
+                            await ref.read(fileProvider).gettingFile();
+                            controller.text = '';
+                            Navigator.of(context).pop();
+                            setState(() {});
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: SvgPicture.asset(
+                                "assets/svg/folder-plus-solid.svg"),
+                          ),
+                        ),
+                      ),
+                    ]),
                   ),
-                ]),
+                ],
               ),
             );
           },
